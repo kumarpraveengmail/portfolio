@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Praveen Kumar – Data Analyst</title>
+<title>Praveen Kumar – MIS & Data Analyst</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -14,10 +14,12 @@
     --accent: #00e5ff;
     --accent2: #7b61ff;
     --accent3: #ff6b6b;
+    --accent4: #00e676;
     --text: #e8eaf6;
     --text-muted: #6b7fa3;
     --text-dim: #3d4f72;
     --green: #00e676;
+    --orange: #ffb347;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,7 +32,19 @@
     cursor: none;
   }
 
-  /* Custom cursor */
+  /* ─── SCROLL PROGRESS ─── */
+  #scroll-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+    z-index: 10000;
+    transition: width .1s linear;
+    box-shadow: 0 0 10px var(--accent);
+  }
+
+  /* ─── CURSOR ─── */
   .cursor {
     position: fixed;
     width: 10px; height: 10px;
@@ -54,7 +68,69 @@
     opacity: 0.5;
   }
 
-  /* Grid bg */
+  /* ─── FLOATING HIRE ME BUTTON ─── */
+  .hire-float {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 9000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  .hire-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #000;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    border-radius: 100px;
+    text-decoration: none;
+    cursor: none;
+    box-shadow: 0 8px 32px rgba(0,229,255,.4), 0 0 0 0 rgba(0,229,255,.3);
+    animation: hirePulse 2.5s ease infinite;
+    transition: transform .2s, box-shadow .2s;
+    letter-spacing: .03em;
+  }
+  .hire-btn:hover {
+    transform: scale(1.06) translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,229,255,.5);
+  }
+  .hire-btn .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #000;
+    animation: pulse 1.5s ease infinite;
+  }
+  .hire-call {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--surface);
+    border: 1px solid rgba(0,229,255,.3);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    border-radius: 100px;
+    text-decoration: none;
+    cursor: none;
+    transition: all .25s;
+    box-shadow: 0 4px 16px rgba(0,0,0,.4);
+  }
+  .hire-call:hover { background: rgba(0,229,255,.1); border-color: var(--accent); }
+
+  @keyframes hirePulse {
+    0%,100% { box-shadow: 0 8px 32px rgba(0,229,255,.4), 0 0 0 0 rgba(0,229,255,.3); }
+    50% { box-shadow: 0 8px 32px rgba(0,229,255,.4), 0 0 0 12px rgba(0,229,255,.0); }
+  }
+
+  /* ─── GRID BG ─── */
   body::before {
     content: '';
     position: fixed;
@@ -77,7 +153,6 @@
     opacity: 0.5;
   }
 
-  /* Blobs */
   .blob {
     position: fixed;
     border-radius: 50%;
@@ -89,7 +164,7 @@
   .blob2 { width: 400px; height: 400px; background: rgba(123,97,255,.07); bottom: 10%; right: -80px; }
   .blob3 { width: 300px; height: 300px; background: rgba(0,230,118,.05); top: 40%; left: 30%; }
 
-  main { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+  main { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; padding: 0 24px 100px; }
 
   /* ─── HERO ─── */
   .hero {
@@ -144,8 +219,19 @@
     color: var(--text-muted);
     letter-spacing: .08em;
     margin-bottom: 24px;
+    min-height: 20px;
   }
   .role-tag span { color: var(--accent); }
+  .typed-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 14px;
+    background: var(--accent);
+    animation: blink .7s step-end infinite;
+    vertical-align: middle;
+    margin-left: 2px;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
   .hero-summary {
     font-size: 15px;
@@ -154,6 +240,7 @@
     max-width: 540px;
     margin-bottom: 32px;
   }
+  .hero-summary strong { color: var(--accent); font-weight: 500; }
 
   .hero-links { display: flex; flex-wrap: wrap; gap: 12px; }
 
@@ -182,8 +269,14 @@
     background: var(--surface);
   }
   .link-pill.ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .link-pill.download {
+    border: 1px solid rgba(0,230,118,.4);
+    color: var(--green);
+    background: rgba(0,230,118,.06);
+  }
+  .link-pill.download:hover { background: rgba(0,230,118,.12); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,230,118,.2); }
 
-  /* Data panel on right */
+  /* Hero panel */
   .hero-panel {
     width: 160px;
     display: flex;
@@ -196,21 +289,25 @@
     border-radius: 12px;
     padding: 16px;
     text-align: center;
-    transition: border-color .3s;
+    transition: border-color .3s, transform .3s;
   }
-  .stat-card:hover { border-color: var(--accent); }
+  .stat-card:hover { border-color: var(--accent); transform: scale(1.04); }
   .stat-card .val {
     font-family: 'Syne', sans-serif;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 800;
     color: var(--accent);
     line-height: 1;
   }
+  .stat-card:nth-child(2) .val { color: var(--accent2); }
+  .stat-card:nth-child(3) .val { color: var(--green); }
+  .stat-card:nth-child(4) .val { color: var(--orange); }
   .stat-card .lbl {
-    font-size: 10px;
+    font-size: 9px;
     color: var(--text-muted);
     letter-spacing: .06em;
     margin-top: 4px;
+    text-transform: uppercase;
   }
 
   /* ─── SECTIONS ─── */
@@ -249,7 +346,7 @@
   /* ─── SKILLS ─── */
   .skills-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
   }
 
@@ -257,7 +354,7 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 24px;
+    padding: 22px;
     transition: all .3s;
     position: relative;
     overflow: hidden;
@@ -270,32 +367,30 @@
     transition: opacity .3s;
     border-radius: inherit;
   }
-  .skill-block.excel::before { background: linear-gradient(135deg, rgba(0,229,255,.06), transparent); }
-  .skill-block.sql::before   { background: linear-gradient(135deg, rgba(123,97,255,.06), transparent); }
-  .skill-block.pbi::before   { background: linear-gradient(135deg, rgba(255,107,107,.06), transparent); }
-  .skill-block:hover { transform: translateY(-4px); border-color: rgba(255,255,255,.12); }
+  .skill-block.excel::before { background: linear-gradient(135deg, rgba(0,229,255,.08), transparent); }
+  .skill-block.sql::before   { background: linear-gradient(135deg, rgba(123,97,255,.08), transparent); }
+  .skill-block.pbi::before   { background: linear-gradient(135deg, rgba(255,107,107,.08), transparent); }
+  .skill-block.kobo::before  { background: linear-gradient(135deg, rgba(0,230,118,.08), transparent); }
+  .skill-block:hover { transform: translateY(-5px); border-color: rgba(255,255,255,.14); }
   .skill-block:hover::before { opacity: 1; }
 
-  .skill-icon {
-    font-size: 28px;
-    margin-bottom: 14px;
-    display: block;
-  }
+  .skill-icon { font-size: 26px; margin-bottom: 12px; display: block; }
   .skill-name {
     font-family: 'Syne', sans-serif;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 700;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
   .skill-block.excel .skill-name { color: var(--accent); }
   .skill-block.sql .skill-name   { color: var(--accent2); }
   .skill-block.pbi .skill-name   { color: var(--accent3); }
+  .skill-block.kobo .skill-name  { color: var(--green); }
 
-  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 5px; }
   .skill-tag {
     font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    padding: 3px 9px;
+    font-size: 9.5px;
+    padding: 3px 8px;
     border-radius: 4px;
     border: 1px solid var(--border);
     color: var(--text-muted);
@@ -341,7 +436,8 @@
     font-family: 'DM Mono', monospace;
     font-size: 12px;
     color: var(--accent);
-    margin-bottom: 14px;
+    margin-bottom: 18px;
+    line-height: 1.5;
   }
   .exp-date {
     font-family: 'DM Mono', monospace;
@@ -356,13 +452,32 @@
   }
   .exp-date.active { color: var(--green); border-color: rgba(0,230,118,.25); background: rgba(0,230,118,.06); }
 
-  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  /* Sub-section heading inside experience */
+  .exp-sub-head {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    background: rgba(0,229,255,.06);
+    border: 1px solid rgba(0,229,255,.15);
+    border-radius: 4px;
+    display: inline-block;
+    margin: 14px 0 8px;
+  }
+  .exp-sub-head.coord { color: var(--accent2); background: rgba(123,97,255,.06); border-color: rgba(123,97,255,.15); }
+  .exp-sub-head.tools { color: var(--orange); background: rgba(255,179,71,.06); border-color: rgba(255,179,71,.15); }
+  .exp-sub-head.report { color: var(--accent3); background: rgba(255,107,107,.06); border-color: rgba(255,107,107,.15); }
+
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 7px; }
   .exp-bullets li {
     font-size: 13.5px;
     color: var(--text-muted);
     padding-left: 16px;
     position: relative;
-    line-height: 1.5;
+    line-height: 1.55;
   }
   .exp-bullets li::before {
     content: '▸';
@@ -372,13 +487,16 @@
     font-size: 10px;
     top: 4px;
   }
+  .exp-bullets li strong { color: var(--text); font-weight: 500; }
 
   /* ─── PROJECT ─── */
+  .project-grid { display: flex; flex-direction: column; gap: 20px; }
+
   .project-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 32px;
+    padding: 28px 32px;
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 24px;
@@ -387,37 +505,37 @@
     position: relative;
     overflow: hidden;
   }
-  .project-card::after {
-    content: 'POWER BI';
+  .project-card:hover { border-color: var(--accent2); transform: translateY(-3px); box-shadow: 0 16px 48px rgba(123,97,255,.1); }
+
+  .project-badge {
     position: absolute;
-    top: 24px; right: 24px;
+    top: 20px; right: 20px;
     font-family: 'DM Mono', monospace;
     font-size: 10px;
-    color: var(--accent3);
     letter-spacing: .1em;
     padding: 4px 10px;
-    border: 1px solid rgba(255,107,107,.25);
     border-radius: 4px;
-    background: rgba(255,107,107,.06);
   }
-  .project-card:hover { border-color: var(--accent2); transform: translateY(-3px); box-shadow: 0 16px 48px rgba(123,97,255,.1); }
+  .badge-pbi { color: var(--accent3); border: 1px solid rgba(255,107,107,.25); background: rgba(255,107,107,.06); }
+  .badge-excel { color: var(--accent); border: 1px solid rgba(0,229,255,.25); background: rgba(0,229,255,.06); }
 
   .project-title {
     font-family: 'Syne', sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 800;
     color: var(--text);
-    margin-bottom: 14px;
+    margin-bottom: 10px;
+    padding-right: 80px;
   }
-  .project-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+  .project-desc { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; }
 
-  /* Mini bar chart decoration */
   .mini-chart {
     display: flex;
     align-items: flex-end;
     gap: 4px;
     height: 48px;
     padding: 8px;
+    align-self: center;
   }
   .bar { width: 8px; border-radius: 2px 2px 0 0; background: linear-gradient(180deg, var(--accent2), var(--accent)); animation: barGrow .8s ease both; }
 
@@ -428,32 +546,34 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 22px;
+    padding: 24px;
     transition: border-color .3s;
   }
   .edu-card:hover, .cert-card:hover { border-color: var(--accent2); }
 
+  .edu-item { margin-bottom: 18px; }
+  .edu-item:last-child { margin-bottom: 0; }
   .edu-degree {
     font-family: 'Syne', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--text);
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
   .edu-uni {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
     color: var(--accent2);
-    margin-bottom: 6px;
+    margin-bottom: 2px;
   }
-  .edu-year { font-size: 12px; color: var(--text-dim); }
+  .edu-year { font-size: 11px; color: var(--text-dim); }
 
   .cert-list { display: flex; flex-direction: column; gap: 10px; }
   .cert-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 14px;
+    padding: 12px 14px;
     border-radius: 8px;
     background: var(--surface2);
     border: 1px solid var(--border);
@@ -468,15 +588,16 @@
     font-size: 11px;
     color: var(--green);
     font-weight: 700;
+    flex-shrink: 0;
   }
 
-  /* ─── CONTACT ─── */
+  /* ─── CONTACT BAR ─── */
   .contact-bar {
     margin-top: 64px;
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: 1px solid rgba(0,229,255,.2);
     border-radius: 20px;
-    padding: 36px;
+    padding: 40px 36px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -489,23 +610,45 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(0,229,255,.04), rgba(123,97,255,.04));
+    background: linear-gradient(135deg, rgba(0,229,255,.05), rgba(123,97,255,.05));
+  }
+  .contact-bar::after {
+    content: 'AVAILABLE NOW';
+    position: absolute;
+    top: 20px; right: 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--green);
+    letter-spacing: .15em;
+    border: 1px solid rgba(0,230,118,.3);
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: rgba(0,230,118,.06);
   }
   .contact-bar h3 {
     font-family: 'Syne', sans-serif;
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 800;
     color: var(--text);
+    margin-bottom: 6px;
+    position: relative;
   }
-  .contact-bar p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+  .contact-bar .sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .contact-bar .sub span { color: var(--accent); }
 
-  .contact-links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .contact-links { display: flex; flex-wrap: wrap; gap: 10px; position: relative; }
 
   .c-link {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 20px;
+    padding: 12px 20px;
     border-radius: 10px;
     font-family: 'DM Mono', monospace;
     font-size: 12px;
@@ -516,7 +659,15 @@
     transition: all .25s;
     cursor: none;
   }
-  .c-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,.06); }
+  .c-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,.06); transform: translateY(-2px); }
+  .c-link.phone-link {
+    background: linear-gradient(135deg, rgba(0,229,255,.1), rgba(123,97,255,.08));
+    border-color: rgba(0,229,255,.3);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .c-link.phone-link:hover { background: linear-gradient(135deg, rgba(0,229,255,.2), rgba(123,97,255,.15)); box-shadow: 0 8px 24px rgba(0,229,255,.2); }
 
   /* ─── FOOTER ─── */
   footer {
@@ -554,15 +705,24 @@
     .hero { grid-template-columns: 1fr; }
     .hero-panel { flex-direction: row; width: 100%; }
     .stat-card { flex: 1; }
-    .skills-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
     .two-col { grid-template-columns: 1fr; }
     .exp-card { grid-template-columns: 1fr; }
     .contact-bar { flex-direction: column; align-items: flex-start; }
+    .hire-float { bottom: 16px; right: 16px; }
+    .project-card { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .skills-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
+<!-- Scroll progress -->
+<div id="scroll-bar"></div>
+
+<!-- Custom cursor -->
 <div class="cursor" id="cur"></div>
 <div class="cursor-ring" id="ring"></div>
 <div class="noise"></div>
@@ -570,24 +730,35 @@
 <div class="blob blob2"></div>
 <div class="blob blob3"></div>
 
+<!-- Floating Hire Button -->
+<div class="hire-float">
+  <a href="tel:+919760518551" class="hire-btn">
+    <span class="dot"></span>
+    📞 Hire Me
+  </a>
+  <a href="mailto:praveenkumar9760518551@gmail.com" class="hire-call">✉️ praveenkumar9760518551@gmail.com</a>
+</div>
+
 <main>
 
-  <!-- HERO -->
+  <!-- ─── HERO ─── -->
   <section class="hero">
     <div class="hero-left">
-      <div class="hero-badge">🟢 Open to Opportunities</div>
+      <div class="hero-badge">🟢 Open to Full-Time Opportunities</div>
       <h1>Praveen <br>Kumar</h1>
-      <div class="role-tag">// <span>Data Analyst</span> &nbsp;|&nbsp; <span> Excel · SQL · Power BI </span></div>
+      <div class="role-tag" id="role-tag">// <span id="typed"></span><span class="typed-cursor"></span></div>
       <p class="hero-summary">
-        Results-driven analyst with strong expertise in Advanced Excel, SQL, and Power BI.
-        Experienced in data cleaning, automation, dashboard development, and MIS reporting
-        to support management decision-making and operational efficiency.
+        <strong>MIS & Data Analyst</strong> with 2+ years of experience managing end-to-end data operations
+        across NGO and corporate sectors. Expert in <strong>Advanced Excel, Power BI, SQL & KoBoToolbox</strong> —
+        turning raw field data into actionable reports that drive real-world impact for
+        <strong>development programmes across India</strong>.
       </p>
       <div class="hero-links">
         <a href="mailto:praveenkumar9760518551@gmail.com" class="link-pill primary">📧 Email Me</a>
+        <a href="tel:+919760518551" class="link-pill primary">📞 9760518551</a>
         <a href="https://linkedin.com/in/praveen-kumar-8585b21a7" class="link-pill ghost" target="_blank">🔗 LinkedIn</a>
         <a href="https://github.com/kumarpraveengmail" class="link-pill ghost" target="_blank">⚡ GitHub</a>
-        <a href="tel:+919760518551" class="link-pill ghost">📞 9760518551</a>
+        <a href="javascript:window.print()" class="link-pill download">⬇ Download CV</a>
       </div>
     </div>
     <div class="hero-panel">
@@ -596,8 +767,12 @@
         <div class="lbl">YRS EXP</div>
       </div>
       <div class="stat-card">
-        <div class="val">3+</div>
-        <div class="lbl">CORE TOOLS</div>
+        <div class="val">10+</div>
+        <div class="lbl">DEPTS COORD</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">6+</div>
+        <div class="lbl">PROG AREAS</div>
       </div>
       <div class="stat-card">
         <div class="val">25%</div>
@@ -606,7 +781,7 @@
     </div>
   </section>
 
-  <!-- SKILLS -->
+  <!-- ─── SKILLS ─── -->
   <section>
     <div class="sec-label">
       <span class="num">01</span>
@@ -616,7 +791,7 @@
 
       <div class="skill-block excel">
         <span class="skill-icon">📊</span>
-        <div class="skill-name">Excel</div>
+        <div class="skill-name">Advanced Excel</div>
         <div class="skill-tags">
           <span class="skill-tag">Pivot Tables</span>
           <span class="skill-tag">Power Pivot</span>
@@ -628,7 +803,12 @@
           <span class="skill-tag">Flash Fill</span>
           <span class="skill-tag">Data Cleaning</span>
           <span class="skill-tag">MIS Reports</span>
-          <span class="skill-tag">Dashboard</span>
+          <span class="skill-tag">Power Query</span>
+          <span class="skill-tag">IF/IFS</span>
+          <span class="skill-tag">Conditional Formatting</span>
+          <span class="skill-tag">SUMPRODUCT</span>
+          <span class="skill-tag">Data Validation</span>
+          <span class="skill-tag">Chart & Graph</span>
         </div>
       </div>
 
@@ -666,10 +846,27 @@
         </div>
       </div>
 
+      <div class="skill-block kobo">
+        <span class="skill-icon">📋</span>
+        <div class="skill-name">Data & Tools</div>
+        <div class="skill-tags">
+          <span class="skill-tag">KoBoToolbox</span>
+          <span class="skill-tag">Form Design</span>
+          <span class="skill-tag">Basecamp</span>
+          <span class="skill-tag">Data Collection</span>
+          <span class="skill-tag">Master Sheet Mgmt</span>
+          <span class="skill-tag">MIS Reporting</span>
+          <span class="skill-tag">Data Refinement</span>
+          <span class="skill-tag">Manual Data Entry</span>
+          <span class="skill-tag">Email Coordination</span>
+          <span class="skill-tag">Field Operations</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
+  <!-- ─── EXPERIENCE ─── -->
   <section>
     <div class="sec-label">
       <span class="num">02</span>
@@ -677,34 +874,79 @@
     </div>
     <div class="exp-list">
 
+      <!-- MIS Role -->
       <div class="exp-card">
         <div>
-          <div class="exp-title">MIS Assistant</div>
-          <div class="exp-company">PRAGYA NGO</div>
+          <div class="exp-title">Management Information Assistant (MIS)</div>
+          <div class="exp-company">
+            Pragya – Development Organisation &nbsp;|&nbsp; Gurugram, NCR<br>
+            <span style="opacity:.7">Non-profit working in India · Nepal · Bangladesh · Kenya</span>
+          </div>
+
+          <div class="exp-sub-head">📂 Data Collection & Management</div>
           <ul class="exp-bullets">
-            <li>Daily data collection, validation, and MIS reporting for management teams.</li>
-            <li>Data collection from Kobo Toolbox and form management creation.</li>
-            <li>Data analysis and coordination with cross-functional teams.</li>
+            <li>Collect daily field-level data from multiple platforms — <strong>KoBoToolbox, Basecamp, and official email</strong> — across all India-based projects</li>
+            <li>Handle and manage the <strong>complete data of all Pragya India projects</strong> spanning Livelihoods & Food Security, Gender Empowerment, Disaster Management, Natural Resource Management, WASH, Education, and Health & Nutrition</li>
+            <li>Refine and clean raw field data to ensure accuracy, consistency, and completeness before processing</li>
+            <li>Maintain and update <strong>Master Sheets</strong> for all ongoing India projects across Head Office and Regional Offices</li>
+            <li>Perform manual data entry from physical attendance sheets into Excel spreadsheets</li>
+          </ul>
+
+          <div class="exp-sub-head report">📊 Reporting & Analysis</div>
+          <ul class="exp-bullets">
+            <li>Analyze program data using <strong>Pivot Tables</strong> to identify trends, track progress, and generate actionable insights</li>
+            <li>Prepare and distribute <strong>Weekly, Fortnightly (FN), and Monthly MIS Reports</strong> to respective departments and stakeholders</li>
+            <li>Generate customized reports for multiple departments as per their requirements and deadlines</li>
+          </ul>
+
+          <div class="exp-sub-head coord">🤝 Inter-Departmental Coordination</div>
+          <ul class="exp-bullets">
+            <li><strong>Coordinate with all departments of Head Office and Regional Offices</strong> across India via email and phone calls for timely data collection, clarification, and reporting</li>
+            <li>Act as the <strong>central point of contact</strong> between field teams, regional offices, and head office for all MIS-related communication</li>
+            <li>Liaise with <strong>Programme, Finance/Accounts, M&E, HR, and Operations</strong> departments to ensure smooth data flow and reporting</li>
+          </ul>
+
+          <div class="exp-sub-head tools">⚙️ Tools & Technology</div>
+          <ul class="exp-bullets">
+            <li>Apply <strong>Advanced Excel functions, standard formulas, and Power Query</strong> for data processing, automation, and report generation</li>
+            <li>Design and create <strong>KoBoToolbox digital forms</strong> for structured field data collection, reducing manual errors and simplifying reporting for field staff</li>
           </ul>
         </div>
         <div class="exp-date active">Jan 2025 – Present 🟢</div>
       </div>
 
+      <!-- MCA Role -->
+      <div class="exp-card">
+        <div>
+          <div class="exp-title">Monitoring Coordinator Assistant (MCA)</div>
+          <div class="exp-company">
+            Pragya – Development Organisation &nbsp;|&nbsp; Gurugram, NCR
+          </div>
+          <ul class="exp-bullets">
+            <li>Coordinated with field staff deployed across project locations for scheduling and planning</li>
+            <li>Prepared <strong>daily and weekly Work Plans</strong> for field staff, specifying responsibilities, targets, and locations</li>
+            <li>Collected and verified field staff <strong>attendance records</strong> and submitted them to the Accounts team for salary processing</li>
+            <li>Maintained communication with field teams to track movement and ensure timely execution of field activities</li>
+          </ul>
+        </div>
+        <div class="exp-date">Jan 2025 – March 2025</div>
+      </div>
+
+      <!-- Vidal Health -->
       <div class="exp-card">
         <div>
           <div class="exp-title">MIS Executive</div>
-          <div class="exp-company">Vidal Health Insurance TPA</div>
+          <div class="exp-company">Vidal Health Insurance TPA &nbsp;|&nbsp; Corporate Sector</div>
           <ul class="exp-bullets">
-            <li>Managed and handled health insurance policies for multiple corporate clients simultaneously.</li>
-            <li>Collected and processed data from PDFs, Excel sheets, CSV files, and company portals/websites.</li>
-            <li>Cleaned, verified, and formatted large datasets according to company standards before system upload.</li>
-	          <li>Created and updated insurance policies based on policy terms, conditions, and client requirements.</li>
-	          <li>Generated employee health insurance cards and maintained accurate policy records.</li>
-	          <li>Managed employee additions, deletions, and modifications within insurance policies.</li>
-	          <li>Coordinated claim processing and assisted in resolving policy-related and claim-related issues.</li>
-	          <li>Handled day-to-day policy servicing operations for more than 10+ companies efficiently.</li>
-	          <li>Ensured data accuracy, timely uploads, and smooth coordination between clients and internal teams.</li>
-	          <li>Worked extensively with Excel and internal portals for data management and reporting.</li>
+            <li>Managed health insurance policies for <strong>10+ corporate clients</strong> simultaneously</li>
+            <li>Collected and processed data from PDFs, Excel sheets, CSV files, and company portals</li>
+            <li>Cleaned, verified, and formatted large datasets according to company standards before system upload</li>
+            <li>Created and updated insurance policies based on policy terms, conditions, and client requirements</li>
+            <li>Generated employee health insurance cards and maintained accurate policy records</li>
+            <li>Managed employee additions, deletions, and modifications within insurance policies</li>
+            <li>Coordinated claim processing and assisted in resolving policy and claim-related issues</li>
+            <li>Ensured data accuracy, timely uploads, and smooth coordination between clients and internal teams</li>
+            <li>Worked extensively with <strong>Excel and internal portals</strong> for data management and reporting</li>
           </ul>
         </div>
         <div class="exp-date">Apr 2024 – Dec 2024</div>
@@ -713,74 +955,64 @@
     </div>
   </section>
 
-  <!-- PROJECT -->
+  <!-- ─── PROJECTS ─── -->
   <section>
     <div class="sec-label">
       <span class="num">03</span>
       <h2>Projects</h2>
     </div>
-    <div class="project-card">
-      <div>
-        <div class="project-title">Sales Analytics Dashboard</div>
-        <p class="project-desc">
-          Created dynamic, interactive dashboards to track <strong style="color:var(--text)">revenue, profit %, and YoY growth</strong>.
-          Applied <strong style="color:var(--text)">Power Query</strong> for ETL data transformation and
-          advanced <strong style="color:var(--text)">DAX formulas</strong> for data modeling and KPI calculations.
-          The dashboard enabled real-time business insights for management reporting.
-        </p>
+    <div class="project-grid">
+
+      <div class="project-card">
+        <span class="project-badge badge-excel">EXCEL + POWER BI</span>
+        <div>
+          <div class="project-title">Sales Analytics Dashboard</div>
+          <p class="project-desc">
+            Created dynamic, interactive dashboards to track <strong style="color:var(--text)">revenue, profit %, and YoY growth</strong>.
+            Applied <strong style="color:var(--text)">Power Query</strong> for ETL data transformation and
+            advanced <strong style="color:var(--text)">DAX formulas</strong> for data modeling and KPI calculations.
+            Enabled real-time business insights for management reporting.
+          </p>
+        </div>
+        <div class="mini-chart">
+          <div class="bar" style="height:20px; animation-delay:.1s"></div>
+          <div class="bar" style="height:32px; animation-delay:.2s"></div>
+          <div class="bar" style="height:18px; animation-delay:.3s"></div>
+          <div class="bar" style="height:40px; animation-delay:.4s"></div>
+          <div class="bar" style="height:28px; animation-delay:.5s"></div>
+          <div class="bar" style="height:45px; animation-delay:.6s"></div>
+        </div>
       </div>
-      <div class="mini-chart">
-        <div class="bar" style="height:20px; animation-delay:.1s"></div>
-        <div class="bar" style="height:32px; animation-delay:.2s"></div>
-        <div class="bar" style="height:18px; animation-delay:.3s"></div>
-        <div class="bar" style="height:40px; animation-delay:.4s"></div>
-        <div class="bar" style="height:28px; animation-delay:.5s"></div>
-        <div class="bar" style="height:45px; animation-delay:.6s"></div>
+
+      <div class="project-card">
+        <span class="project-badge badge-pbi">POWER BI</span>
+        <div>
+          <div class="project-title">AE Phase II – Crops Data Dashboard</div>
+          <p class="project-desc">
+            Developed an interactive <strong style="color:var(--text)">Power BI dashboard</strong> for monitoring and analyzing crop-related data under the AE Phase II project at Pragya. Tracks agricultural activities, farmer records, crop performance, and project progress through dynamic visualizations and automated reporting.
+          </p>
+          <ul class="exp-bullets" style="margin-top:10px">
+            <li>Consolidated and cleaned data from multiple Excel sheets using Power Query</li>
+            <li>Built data models and relationships for efficient multi-source reporting</li>
+            <li>Used <strong>DAX formulas</strong> for KPI calculations, percentages, and performance tracking</li>
+            <li>Designed interactive slicers, charts, and filters for easy management review</li>
+            <li>Automated reporting to reduce manual work and improve accuracy</li>
+          </ul>
+        </div>
+        <div class="mini-chart">
+          <div class="bar" style="height:24px; animation-delay:.1s"></div>
+          <div class="bar" style="height:38px; animation-delay:.2s"></div>
+          <div class="bar" style="height:20px; animation-delay:.3s"></div>
+          <div class="bar" style="height:45px; animation-delay:.4s"></div>
+          <div class="bar" style="height:30px; animation-delay:.5s"></div>
+          <div class="bar" style="height:42px; animation-delay:.6s"></div>
+        </div>
       </div>
+
     </div>
   </section>
 
-<section>
-  <div class="project-card">
-
-    <div>
-
-      <div class="project-title">AE Phase II Crops Data Dashboard</div>
-
-      <p class="project-desc">
-        Developed an interactive Power BI dashboard for monitoring and analyzing crop-related data under the AE Phase II project.
-        The dashboard was designed to track agricultural activities, farmer records, crop performance,
-        and project progress through dynamic visualizations and automated reporting.
-      </p>
-
-      <div class="Key">Key Responsibilities:</div>
-
-      <ul class="exp-bullets">
-        <li>Collected and consolidated data from multiple Excel sheets and raw datasets.</li>
-        <li>Cleaned, transformed, and validated data using Power Query.</li>
-        <li>Created data models and relationships for efficient reporting and analysis.</li>
-        <li>Developed interactive dashboards and visual reports using Power BI.</li>
-        <li>Used DAX formulas for KPI calculations, percentages, and performance tracking.</li>
-        <li>Designed charts, tables, slicers, and filters for easy data analysis.</li>
-        <li>Automated reporting processes to reduce manual work and improve accuracy.</li>
-        <li>Generated insights for monitoring crop activities, farmer participation, and project performance.</li>
-        <li>Improved data visualization and reporting efficiency for management review.</li>
-      </ul>
-
-    </div>
-
-    <div class="mini-chart">
-      <div class="bar" style="height:20px; animation-delay:.1s"></div>
-      <div class="bar" style="height:32px; animation-delay:.2s"></div>
-      <div class="bar" style="height:18px; animation-delay:.3s"></div>
-      <div class="bar" style="height:40px; animation-delay:.4s"></div>
-      <div class="bar" style="height:28px; animation-delay:.5s"></div>
-      <div class="bar" style="height:45px; animation-delay:.6s"></div>
-    </div>
-
-  </div>
-</section>
-  <!-- EDUCATION + CERTS -->
+  <!-- ─── EDUCATION & CERTS ─── -->
   <section>
     <div class="sec-label">
       <span class="num">04</span>
@@ -789,9 +1021,21 @@
     <div class="two-col">
 
       <div class="edu-card">
-        <div class="edu-degree">🎓 Bachelor of Arts</div>
-        <div class="edu-uni">Dr. Bhim Rao Ambedkar University</div>
-        <div class="edu-year">Agra &nbsp;·&nbsp; 2019 – 2022</div>
+        <div class="edu-item">
+          <div class="edu-degree">🎓 Bachelor of Arts (B.A.)</div>
+          <div class="edu-uni">Dr. Bhim Rao Ambedkar University, Agra</div>
+          <div class="edu-year">2019 – 2022</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">🎓 Intermediate (10+2)</div>
+          <div class="edu-uni">National Inter College, Bhongaon, Mainpuri</div>
+          <div class="edu-year">2018</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">🎓 High School (10th)</div>
+          <div class="edu-uni">National Inter College, Bhongaon, Mainpuri</div>
+          <div class="edu-year">2016</div>
+        </div>
       </div>
 
       <div class="cert-card">
@@ -805,14 +1049,17 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
+  <!-- ─── CONTACT ─── -->
   <div class="contact-bar">
-    <div>
-      <h3>Let's Work Together</h3>
-      <p>Available for data analyst roles & freelance projects.</p>
+    <div style="position:relative">
+      <h3>Ready to Contribute. Let's Talk.</h3>
+      <p class="sub">
+        Looking for a <span>Data Analyst / MIS role</span> where I can drive<br>
+        real impact through data — full-time or freelance.
+      </p>
     </div>
     <div class="contact-links">
-      <a href="tel:9760518551" class="link-pill ghost">📞 9760518551</a>
+      <a href="tel:+919760518551" class="c-link phone-link">📞 +91 97605 18551</a>
       <a href="mailto:praveenkumar9760518551@gmail.com" class="c-link">✉️ Email</a>
       <a href="https://linkedin.com/in/praveen-kumar-8585b21a7" class="c-link" target="_blank">🔗 LinkedIn</a>
       <a href="https://github.com/kumarpraveengmail" class="c-link" target="_blank">⚡ GitHub</a>
@@ -822,21 +1069,26 @@
 </main>
 
 <footer>
-  Designed &amp; built with ♥ &nbsp;·&nbsp; <span>Praveen Kumar</span> &nbsp;·&nbsp; Data Analyst Portfolio &nbsp;·&nbsp; 2025
+  Designed &amp; built with ♥ &nbsp;·&nbsp; <span>Praveen Kumar</span> &nbsp;·&nbsp; MIS & Data Analyst Portfolio &nbsp;·&nbsp; 2025
 </footer>
 
 <script>
-  // Custom cursor
+  // ─── Scroll progress bar ───
+  window.addEventListener('scroll', () => {
+    const total = document.body.scrollHeight - window.innerHeight;
+    const pct = (window.scrollY / total) * 100;
+    document.getElementById('scroll-bar').style.width = pct + '%';
+  });
+
+  // ─── Custom cursor ───
   const cur = document.getElementById('cur');
   const ring = document.getElementById('ring');
   let mx = 0, my = 0, rx = 0, ry = 0;
-
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
     cur.style.left = mx + 'px';
     cur.style.top = my + 'px';
   });
-
   function animRing() {
     rx += (mx - rx) * .15;
     ry += (my - ry) * .15;
@@ -845,35 +1097,55 @@
     requestAnimationFrame(animRing);
   }
   animRing();
-
-  // Hover effect on interactive elements
   const els = document.querySelectorAll('a, button, .skill-block, .exp-card, .stat-card');
   els.forEach(el => {
     el.addEventListener('mouseenter', () => {
-      cur.style.width = '20px';
-      cur.style.height = '20px';
-      ring.style.width = '60px';
-      ring.style.height = '60px';
-      ring.style.borderColor = '#00e5ff';
+      cur.style.width = '20px'; cur.style.height = '20px';
+      ring.style.width = '60px'; ring.style.height = '60px';
     });
     el.addEventListener('mouseleave', () => {
-      cur.style.width = '10px';
-      cur.style.height = '10px';
-      ring.style.width = '36px';
-      ring.style.height = '36px';
-      ring.style.borderColor = '#00e5ff';
+      cur.style.width = '10px'; cur.style.height = '10px';
+      ring.style.width = '36px'; ring.style.height = '36px';
     });
   });
 
-  // Scroll reveal
+  // ─── Typing animation ───
+  const roles = [
+    'MIS Assistant  |  Data Analyst',
+    'Excel · Power BI · SQL · KoBoToolbox',
+    'NGO Data Operations Specialist',
+    'Field Data → Actionable Reports',
+  ];
+  let ri = 0, ci = 0, deleting = false;
+  const typedEl = document.getElementById('typed');
+  function type() {
+    const current = roles[ri];
+    if (!deleting) {
+      typedEl.textContent = current.slice(0, ci + 1);
+      ci++;
+      if (ci === current.length) {
+        deleting = true;
+        setTimeout(type, 2000);
+        return;
+      }
+    } else {
+      typedEl.textContent = current.slice(0, ci - 1);
+      ci--;
+      if (ci === 0) {
+        deleting = false;
+        ri = (ri + 1) % roles.length;
+      }
+    }
+    setTimeout(type, deleting ? 40 : 70);
+  }
+  type();
+
+  // ─── Scroll reveal ───
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.animationPlayState = 'running';
-      }
+      if (e.isIntersecting) e.target.style.animationPlayState = 'running';
     });
   }, { threshold: 0.1 });
-
   document.querySelectorAll('section').forEach(s => {
     s.style.animationPlayState = 'paused';
     obs.observe(s);
