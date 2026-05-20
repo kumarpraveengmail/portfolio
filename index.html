@@ -452,7 +452,6 @@
   }
   .exp-date.active { color: var(--green); border-color: rgba(0,230,118,.25); background: rgba(0,230,118,.06); }
 
-  /* Sub-section heading inside experience */
   .exp-sub-head {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -716,66 +715,106 @@
     .skills-grid { grid-template-columns: 1fr; }
   }
 
-/* ===== IMAGE POPUP ===== */
+  /* ===== IMAGE POPUP ===== */
+  .view-btn {
+    margin-top: 18px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #000;
+    font-weight: 700;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    cursor: none;
+    transition: .3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .view-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,229,255,.3);
+  }
 
-.view-btn{
-  margin-top:18px;
-  padding:10px 18px;
-  border:none;
-  border-radius:10px;
-  background:linear-gradient(135deg, var(--accent), var(--accent2));
-  color:#000;
-  font-weight:700;
-  font-family:'DM Mono', monospace;
-  cursor:none;
-  transition:.3s;
-}
+  /* ─── FIX 1: Modal uses flex from start but hidden via opacity+visibility ─── */
+  .image-modal {
+    display: flex;                  /* always flex so centering works */
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 20000;                 /* above everything including cursor */
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, .92);
+    backdrop-filter: blur(6px);
+    /* hidden state */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease;
+  }
+  .image-modal.active {
+    opacity: 1;
+    visibility: visible;
+  }
 
-.view-btn:hover{
-  transform:translateY(-3px);
-  box-shadow:0 10px 30px rgba(0,229,255,.3);
-}
+  .image-modal img {
+    max-width: 90%;
+    max-height: 88vh;
+    border-radius: 14px;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 40px rgba(0,229,255,.3);
+    object-fit: contain;
+    /* FIX 2: stop clicks on image from closing modal */
+    position: relative;
+    z-index: 1;
+  }
 
-/* Modal */
+  /* Image load error fallback */
+  .modal-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    z-index: 1;
+  }
 
-.image-modal{
-  display:none;
-  position:fixed;
-  z-index:10000;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,.9);
+  .img-error-msg {
+    display: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--accent3);
+    background: rgba(255,107,107,.08);
+    border: 1px solid rgba(255,107,107,.25);
+    border-radius: 8px;
+    padding: 12px 20px;
+    text-align: center;
+    max-width: 380px;
+  }
 
-  justify-content:center;
-  align-items:center;
-}
-
-.image-modal img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:14px;
-  border:2px solid var(--accent);
-  box-shadow:0 0 30px rgba(0,229,255,.3);
-}
-
-.close-btn{
-  position:absolute;
-  top:30px;
-  right:40px;
-  font-size:45px;
-  color:white;
-  cursor:pointer;
-}
+  .close-btn {
+    position: absolute;
+    top: -54px;
+    right: -10px;
+    font-size: 38px;
+    color: #fff;
+    cursor: pointer;
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.15);
+    transition: background .2s, transform .2s;
+    line-height: 1;
+    z-index: 2;
+  }
+  .close-btn:hover { background: rgba(255,107,107,.3); transform: rotate(90deg) scale(1.1); }
 </style>
 </head>
 <body>
 
-<!-- Scroll progress -->
 <div id="scroll-bar"></div>
-
-<!-- Custom cursor -->
 <div class="cursor" id="cur"></div>
 <div class="cursor-ring" id="ring"></div>
 <div class="noise"></div>
@@ -815,53 +854,30 @@
       </div>
     </div>
     <div class="hero-panel">
-      <div class="stat-card">
-        <div class="val">2+</div>
-        <div class="lbl">YRS EXP</div>
-      </div>
-      <div class="stat-card">
-        <div class="val">10+</div>
-        <div class="lbl">DEPTS COORD</div>
-      </div>
-      <div class="stat-card">
-        <div class="val">6+</div>
-        <div class="lbl">PROG AREAS</div>
-      </div>
-      <div class="stat-card">
-        <div class="val">30%</div>
-        <div class="lbl">MANUAL WORK ↓</div>
-      </div>
+      <div class="stat-card"><div class="val">2+</div><div class="lbl">YRS EXP</div></div>
+      <div class="stat-card"><div class="val">10+</div><div class="lbl">DEPTS COORD</div></div>
+      <div class="stat-card"><div class="val">6+</div><div class="lbl">PROG AREAS</div></div>
+      <div class="stat-card"><div class="val">30%</div><div class="lbl">MANUAL WORK ↓</div></div>
     </div>
   </section>
 
   <!-- ─── SKILLS ─── -->
   <section>
-    <div class="sec-label">
-      <span class="num">01</span>
-      <h2>Technical Skills</h2>
-    </div>
+    <div class="sec-label"><span class="num">01</span><h2>Technical Skills</h2></div>
     <div class="skills-grid">
 
       <div class="skill-block excel">
         <span class="skill-icon">📊</span>
         <div class="skill-name">Advanced Excel</div>
         <div class="skill-tags">
-          <span class="skill-tag">Pivot Tables</span>
-          <span class="skill-tag">Power Pivot</span>
-          <span class="skill-tag">VLOOKUP</span>
-          <span class="skill-tag">XLOOKUP</span>
-          <span class="skill-tag">INDEX-MATCH</span>
-          <span class="skill-tag">COUNTIFS</span>
-          <span class="skill-tag">SUMIFS</span>
-          <span class="skill-tag">Flash Fill</span>
-          <span class="skill-tag">Data Cleaning</span>
-          <span class="skill-tag">MIS Reports</span>
-          <span class="skill-tag">Power Query</span>
-          <span class="skill-tag">IF/IFS</span>
-          <span class="skill-tag">Conditional Formatting</span>
-          <span class="skill-tag">SUMPRODUCT</span>
-          <span class="skill-tag">Data Validation</span>
-          <span class="skill-tag">Chart & Graph</span>
+          <span class="skill-tag">Pivot Tables</span><span class="skill-tag">Power Pivot</span>
+          <span class="skill-tag">VLOOKUP</span><span class="skill-tag">XLOOKUP</span>
+          <span class="skill-tag">INDEX-MATCH</span><span class="skill-tag">COUNTIFS</span>
+          <span class="skill-tag">SUMIFS</span><span class="skill-tag">Flash Fill</span>
+          <span class="skill-tag">Data Cleaning</span><span class="skill-tag">MIS Reports</span>
+          <span class="skill-tag">Power Query</span><span class="skill-tag">IF/IFS</span>
+          <span class="skill-tag">Conditional Formatting</span><span class="skill-tag">SUMPRODUCT</span>
+          <span class="skill-tag">Data Validation</span><span class="skill-tag">Chart & Graph</span>
         </div>
       </div>
 
@@ -869,16 +885,11 @@
         <span class="skill-icon">🗄️</span>
         <div class="skill-name">SQL</div>
         <div class="skill-tags">
-          <span class="skill-tag">SELECT / WHERE</span>
-          <span class="skill-tag">GROUP BY</span>
-          <span class="skill-tag">HAVING</span>
-          <span class="skill-tag">INNER JOIN</span>
-          <span class="skill-tag">LEFT JOIN</span>
-          <span class="skill-tag">Subqueries</span>
-          <span class="skill-tag">SUM / AVG</span>
-          <span class="skill-tag">COUNT / MAX</span>
-          <span class="skill-tag">DB Design</span>
-          <span class="skill-tag">Foreign Keys</span>
+          <span class="skill-tag">SELECT / WHERE</span><span class="skill-tag">GROUP BY</span>
+          <span class="skill-tag">HAVING</span><span class="skill-tag">INNER JOIN</span>
+          <span class="skill-tag">LEFT JOIN</span><span class="skill-tag">Subqueries</span>
+          <span class="skill-tag">SUM / AVG</span><span class="skill-tag">COUNT / MAX</span>
+          <span class="skill-tag">DB Design</span><span class="skill-tag">Foreign Keys</span>
         </div>
       </div>
 
@@ -886,16 +897,11 @@
         <span class="skill-icon">📈</span>
         <div class="skill-name">Power BI</div>
         <div class="skill-tags">
-          <span class="skill-tag">Power Query</span>
-          <span class="skill-tag">DAX</span>
-          <span class="skill-tag">CALCULATE</span>
-          <span class="skill-tag">SUMX</span>
-          <span class="skill-tag">FILTER</span>
-          <span class="skill-tag">TOTALYTD</span>
-          <span class="skill-tag">Data Modeling</span>
-          <span class="skill-tag">Relationships</span>
-          <span class="skill-tag">Slicers</span>
-          <span class="skill-tag">KPI Cards</span>
+          <span class="skill-tag">Power Query</span><span class="skill-tag">DAX</span>
+          <span class="skill-tag">CALCULATE</span><span class="skill-tag">SUMX</span>
+          <span class="skill-tag">FILTER</span><span class="skill-tag">TOTALYTD</span>
+          <span class="skill-tag">Data Modeling</span><span class="skill-tag">Relationships</span>
+          <span class="skill-tag">Slicers</span><span class="skill-tag">KPI Cards</span>
         </div>
       </div>
 
@@ -903,16 +909,11 @@
         <span class="skill-icon">📋</span>
         <div class="skill-name">Data & Tools</div>
         <div class="skill-tags">
-          <span class="skill-tag">KoBoToolbox</span>
-          <span class="skill-tag">Form Design</span>
-          <span class="skill-tag">Basecamp</span>
-          <span class="skill-tag">Data Collection</span>
-          <span class="skill-tag">Master Sheet Mgmt</span>
-          <span class="skill-tag">MIS Reporting</span>
-          <span class="skill-tag">Data Refinement</span>
-          <span class="skill-tag">Manual Data Entry</span>
-          <span class="skill-tag">Email Coordination</span>
-          <span class="skill-tag">Field Operations</span>
+          <span class="skill-tag">KoBoToolbox</span><span class="skill-tag">Form Design</span>
+          <span class="skill-tag">Basecamp</span><span class="skill-tag">Data Collection</span>
+          <span class="skill-tag">Master Sheet Mgmt</span><span class="skill-tag">MIS Reporting</span>
+          <span class="skill-tag">Data Refinement</span><span class="skill-tag">Manual Data Entry</span>
+          <span class="skill-tag">Email Coordination</span><span class="skill-tag">Field Operations</span>
         </div>
       </div>
 
@@ -921,13 +922,9 @@
 
   <!-- ─── EXPERIENCE ─── -->
   <section>
-    <div class="sec-label">
-      <span class="num">02</span>
-      <h2>Work Experience</h2>
-    </div>
+    <div class="sec-label"><span class="num">02</span><h2>Work Experience</h2></div>
     <div class="exp-list">
 
-      <!-- MIS Role -->
       <div class="exp-card">
         <div>
           <div class="exp-title">Management Information Assistant (MIS)</div>
@@ -968,13 +965,10 @@
         <div class="exp-date active">Jan 2025 – Present 🟢</div>
       </div>
 
-      <!-- MCA Role -->
       <div class="exp-card">
         <div>
           <div class="exp-title">Monitoring Coordinator Assistant (MCA)</div>
-          <div class="exp-company">
-            Pragya – Development Organisation &nbsp;|&nbsp; Gurugram, NCR
-          </div>
+          <div class="exp-company">Pragya – Development Organisation &nbsp;|&nbsp; Gurugram, NCR</div>
           <ul class="exp-bullets">
             <li>Coordinated with field staff deployed across project locations for scheduling and planning</li>
             <li>Prepared <strong>daily and weekly Work Plans</strong> for field staff, specifying responsibilities, targets, and locations</li>
@@ -985,7 +979,6 @@
         <div class="exp-date">Jan 2025 – March 2025</div>
       </div>
 
-      <!-- Vidal Health -->
       <div class="exp-card">
         <div>
           <div class="exp-title">MIS Executive</div>
@@ -1010,10 +1003,7 @@
 
   <!-- ─── PROJECTS ─── -->
   <section>
-    <div class="sec-label">
-      <span class="num">03</span>
-      <h2>Projects</h2>
-    </div>
+    <div class="sec-label"><span class="num">03</span><h2>Projects</h2></div>
     <div class="project-grid">
 
       <div class="project-card">
@@ -1028,12 +1018,12 @@
           </p>
         </div>
         <div class="mini-chart">
-          <div class="bar" style="height:20px; animation-delay:.1s"></div>
-          <div class="bar" style="height:32px; animation-delay:.2s"></div>
-          <div class="bar" style="height:18px; animation-delay:.3s"></div>
-          <div class="bar" style="height:40px; animation-delay:.4s"></div>
-          <div class="bar" style="height:28px; animation-delay:.5s"></div>
-          <div class="bar" style="height:45px; animation-delay:.6s"></div>
+          <div class="bar" style="height:20px;animation-delay:.1s"></div>
+          <div class="bar" style="height:32px;animation-delay:.2s"></div>
+          <div class="bar" style="height:18px;animation-delay:.3s"></div>
+          <div class="bar" style="height:40px;animation-delay:.4s"></div>
+          <div class="bar" style="height:28px;animation-delay:.5s"></div>
+          <div class="bar" style="height:45px;animation-delay:.6s"></div>
         </div>
       </div>
 
@@ -1051,18 +1041,16 @@
             <li>Designed interactive slicers, charts, and filters for easy management review</li>
             <li>Automated reporting to reduce manual work and improve accuracy</li>
           </ul>
-          <button class="view-btn" onclick="openImage()">
-           📷 View Dashboard
-          </button>
+          <!-- FIX 3: Button triggers fixed modal -->
+          <button class="view-btn" id="viewDashboardBtn">📷 View Dashboard</button>
         </div>
-
         <div class="mini-chart">
-          <div class="bar" style="height:24px; animation-delay:.1s"></div>
-          <div class="bar" style="height:38px; animation-delay:.2s"></div>
-          <div class="bar" style="height:20px; animation-delay:.3s"></div>
-          <div class="bar" style="height:45px; animation-delay:.4s"></div>
-          <div class="bar" style="height:30px; animation-delay:.5s"></div>
-          <div class="bar" style="height:42px; animation-delay:.6s"></div>
+          <div class="bar" style="height:24px;animation-delay:.1s"></div>
+          <div class="bar" style="height:38px;animation-delay:.2s"></div>
+          <div class="bar" style="height:20px;animation-delay:.3s"></div>
+          <div class="bar" style="height:45px;animation-delay:.4s"></div>
+          <div class="bar" style="height:30px;animation-delay:.5s"></div>
+          <div class="bar" style="height:42px;animation-delay:.6s"></div>
         </div>
       </div>
 
@@ -1071,12 +1059,8 @@
 
   <!-- ─── EDUCATION & CERTS ─── -->
   <section>
-    <div class="sec-label">
-      <span class="num">04</span>
-      <h2>Education & Certifications</h2>
-    </div>
+    <div class="sec-label"><span class="num">04</span><h2>Education & Certifications</h2></div>
     <div class="two-col">
-
       <div class="edu-card">
         <div class="edu-item">
           <div class="edu-degree">🎓 Bachelor of Arts (B.A.)</div>
@@ -1094,7 +1078,6 @@
           <div class="edu-year">2016</div>
         </div>
       </div>
-
       <div class="cert-card">
         <div class="cert-list">
           <div class="cert-item">O Level – Business Professional Programmer (NIELIT)</div>
@@ -1102,7 +1085,6 @@
           <div class="cert-item">Data Science & Machine Learning – Ducat Institute</div>
         </div>
       </div>
-
     </div>
   </section>
 
@@ -1122,18 +1104,25 @@
       <a href="https://github.com/kumarpraveengmail" class="c-link" target="_blank">⚡ GitHub</a>
     </div>
   </div>
-    <!-- IMAGE MODAL -->
 
-    <div class="image-modal" id="imageModal">
-
-      <span class="close-btn" onclick="closeImage()">
-        &times;
-      </span>
-
-      <img src="images/Crops Project Image.jpg" alt="AE Dashboard">
-
+  <!-- ─── FIX 4: IMAGE MODAL – fixed structure ─── -->
+  <div class="image-modal" id="imageModal" role="dialog" aria-modal="true" aria-label="Dashboard Preview">
+    <div class="modal-inner">
+      <span class="close-btn" id="closeBtn" title="Close">&times;</span>
+      <!-- FIX 5: URL-encoded filename (space → %20), onerror shows helpful message -->
+      <img
+        src="portfolio/Crops%20Project%20Image.jpg"
+        alt="AE Phase II Crops Data Dashboard"
+        id="modalImg"
+        onerror="document.getElementById('imgErrMsg').style.display='block'; this.style.display='none';"
+      >
+      <div class="img-error-msg" id="imgErrMsg">
+        ⚠️ Image not found.<br>
+        Please make sure <code>Crops Project Image.jpg</code><br>
+        is inside an <code>images/</code> folder next to this HTML file.
+      </div>
     </div>
-
+  </div>
 
 </main>
 
@@ -1156,18 +1145,20 @@
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
     cur.style.left = mx + 'px';
-    cur.style.top = my + 'px';
+    cur.style.top  = my + 'px';
   });
   function animRing() {
     rx += (mx - rx) * .15;
     ry += (my - ry) * .15;
     ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
+    ring.style.top  = ry + 'px';
     requestAnimationFrame(animRing);
   }
   animRing();
-  const els = document.querySelectorAll('a, button, .skill-block, .exp-card, .stat-card');
-  els.forEach(el => {
+
+  // FIX 6: Added .view-btn to interactive elements list for cursor enlargement
+  const interactiveEls = document.querySelectorAll('a, button, .skill-block, .exp-card, .stat-card');
+  interactiveEls.forEach(el => {
     el.addEventListener('mouseenter', () => {
       cur.style.width = '20px'; cur.style.height = '20px';
       ring.style.width = '60px'; ring.style.height = '60px';
@@ -1220,18 +1211,36 @@
     obs.observe(s);
   });
 
+  // ─────────────────────────────────────────────
+  //  IMAGE MODAL — all fixes applied here
+  // ─────────────────────────────────────────────
+  const modal    = document.getElementById('imageModal');
+  const closeBtn = document.getElementById('closeBtn');
+  const viewBtn  = document.getElementById('viewDashboardBtn');
 
-// ===== IMAGE POPUP =====
+  // FIX 7: Open modal
+  viewBtn.addEventListener('click', () => {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // prevent background scroll
+  });
 
-function openImage(){
-  document.getElementById("imageModal").style.display = "flex";
-}
+  // FIX 8: Close via × button
+  closeBtn.addEventListener('click', closeModal);
 
-function closeImage(){
-  document.getElementById("imageModal").style.display = "none";
-}
+  // FIX 9: Close by clicking the dark overlay (NOT the image/inner)
+  modal.addEventListener('click', e => {
+    if (e.target === modal) closeModal();
+  });
 
+  // FIX 10: Close with Escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
 
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = ''; // restore scroll
+  }
 </script>
 
 </body>
