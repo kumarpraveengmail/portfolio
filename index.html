@@ -309,6 +309,13 @@
     margin-top: 4px;
     text-transform: uppercase;
   }
+  /* FIX: Stats tooltip / sub-label for context */
+  .stat-card .sub-lbl {
+    font-size: 8px;
+    color: var(--text-dim);
+    margin-top: 2px;
+    font-family: 'DM Mono', monospace;
+  }
 
   /* ─── SECTIONS ─── */
   section {
@@ -452,6 +459,20 @@
   }
   .exp-date.active { color: var(--green); border-color: rgba(0,230,118,.25); background: rgba(0,230,118,.06); }
 
+  /* FIX: Dual-role note */
+  .exp-overlap-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--orange);
+    border: 1px solid rgba(255,179,71,.2);
+    background: rgba(255,179,71,.05);
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-top: 8px;
+    white-space: nowrap;
+    height: fit-content;
+  }
+
   .exp-sub-head {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -528,6 +549,43 @@
   }
   .project-desc { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; }
 
+  /* FIX: Project action links */
+  .project-links {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .proj-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .25s;
+    cursor: none;
+  }
+  .proj-link.github {
+    border: 1px solid rgba(123,97,255,.3);
+    color: var(--accent2);
+    background: rgba(123,97,255,.06);
+  }
+  .proj-link.github:hover { background: rgba(123,97,255,.14); transform: translateY(-2px); }
+  .proj-link.view-dash {
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #000;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: none;
+  }
+  .proj-link.view-dash:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,229,255,.3); }
+
   .mini-chart {
     display: flex;
     align-items: flex-end;
@@ -570,7 +628,7 @@
   .cert-list { display: flex; flex-direction: column; gap: 10px; }
   .cert-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
     padding: 12px 14px;
     border-radius: 8px;
@@ -581,13 +639,20 @@
     transition: all .25s;
   }
   .cert-item:hover { border-color: var(--green); color: var(--text); }
-  .cert-item::before {
-    content: '✓';
+  .cert-check {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
     color: var(--green);
     font-weight: 700;
     flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .cert-info { display: flex; flex-direction: column; gap: 3px; }
+  /* FIX: Cert year badge */
+  .cert-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
   }
 
   /* ─── CONTACT BAR ─── */
@@ -710,45 +775,23 @@
     .contact-bar { flex-direction: column; align-items: flex-start; }
     .hire-float { bottom: 16px; right: 16px; }
     .project-card { grid-template-columns: 1fr; }
+    .hire-call { display: none; }
   }
   @media (max-width: 480px) {
     .skills-grid { grid-template-columns: 1fr; }
   }
 
   /* ===== IMAGE POPUP ===== */
-  .view-btn {
-    margin-top: 18px;
-    padding: 10px 18px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: #000;
-    font-weight: 700;
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    cursor: none;
-    transition: .3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .view-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(0,229,255,.3);
-  }
-
-  /* ─── FIX 1: Modal uses flex from start but hidden via opacity+visibility ─── */
   .image-modal {
-    display: flex;                  /* always flex so centering works */
+    display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
-    z-index: 20000;                 /* above everything including cursor */
+    z-index: 20000;
     left: 0; top: 0;
     width: 100%; height: 100%;
     background: rgba(0, 0, 0, .92);
     backdrop-filter: blur(6px);
-    /* hidden state */
     opacity: 0;
     visibility: hidden;
     transition: opacity .3s ease, visibility .3s ease;
@@ -765,12 +808,10 @@
     border: 2px solid var(--accent);
     box-shadow: 0 0 40px rgba(0,229,255,.3);
     object-fit: contain;
-    /* FIX 2: stop clicks on image from closing modal */
     position: relative;
     z-index: 1;
   }
 
-  /* Image load error fallback */
   .modal-inner {
     position: relative;
     display: flex;
@@ -788,9 +829,16 @@
     background: rgba(255,107,107,.08);
     border: 1px solid rgba(255,107,107,.25);
     border-radius: 8px;
-    padding: 12px 20px;
+    padding: 16px 24px;
     text-align: center;
-    max-width: 380px;
+    max-width: 420px;
+    line-height: 1.6;
+  }
+  .img-error-msg code {
+    background: rgba(255,107,107,.15);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 12px;
   }
 
   .close-btn {
@@ -828,7 +876,7 @@
     <span class="dot"></span>
     📞 Hire Me
   </a>
-  <a href="mailto:praveenkumar9760518551@gmail.com" class="hire-call">✉️ praveenkumar9760518551@gmail.com</a>
+  <a href="mailto:praveenkumar9760518551@gmail.com" class="hire-btn">✉️ Email Me</a>
 </div>
 
 <main>
@@ -847,17 +895,35 @@
       </p>
       <div class="hero-links">
         <a href="mailto:praveenkumar9760518551@gmail.com" class="link-pill primary">📧 Email Me</a>
-        <a href="tel:+919760518551" class="link-pill primary">📞 Contect Me</a>
+        <!-- FIX 1: "Contect" → "Contact" -->
+        <a href="tel:+919760518551" class="link-pill primary">📞 Contact Me</a>
         <a href="https://linkedin.com/in/praveen-kumar-8585b21a7" class="link-pill ghost" target="_blank">🔗 LinkedIn</a>
         <a href="https://github.com/kumarpraveengmail" class="link-pill ghost" target="_blank">⚡ GitHub</a>
-        <a href="Praveen_Kumar_MIS_Data%20Analyst.pdf" download class="link-pill download"> Download CV</a>
+        <a href="Praveen_Kumar_MIS_Data%20Analyst.pdf" download="Praveen_Kumar_MIS_Data_Analyst.pdf" class="link-pill download">⬇ Download CV</a>
       </div>
     </div>
     <div class="hero-panel">
-      <div class="stat-card"><div class="val">2+</div><div class="lbl">YRS EXP</div></div>
-      <div class="stat-card"><div class="val">10+</div><div class="lbl">DEPTS COORD</div></div>
-      <div class="stat-card"><div class="val">6+</div><div class="lbl">PROG AREAS</div></div>
-      <div class="stat-card"><div class="val">30%</div><div class="lbl">MANUAL WORK ↓</div></div>
+      <!-- FIX 2: Stats with context sub-labels -->
+      <div class="stat-card">
+        <div class="val">2+</div>
+        <div class="lbl">YRS EXP</div>
+        <div class="sub-lbl">NGO + Corporate</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">10+</div>
+        <div class="lbl">DEPTS COORD</div>
+        <div class="sub-lbl">Head & Regional Office</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">6+</div>
+        <div class="lbl">PROG AREAS</div>
+        <div class="sub-lbl">Livelihoods, WASH & more</div>
+      </div>
+      <div class="stat-card">
+        <div class="val">30%</div>
+        <div class="lbl">MANUAL WORK ↓</div>
+        <div class="sub-lbl">via KoBoToolbox forms</div>
+      </div>
     </div>
   </section>
 
@@ -962,9 +1028,12 @@
             <li>Design and create <strong>KoBoToolbox digital forms</strong> for structured field data collection, reducing manual errors and simplifying reporting for field staff</li>
           </ul>
         </div>
-        <div class="exp-date active">Jan 2025 – Present 🟢</div>
+        <div>
+          <div class="exp-date active">Jan 2025 – Present 🟢</div>
+        </div>
       </div>
 
+      <!-- FIX 3: MCS role with overlap note -->
       <div class="exp-card">
         <div>
           <div class="exp-title">Monitoring and Coordination Support Assistant (MCS)</div>
@@ -976,7 +1045,11 @@
             <li>Maintained communication with field teams to track movement and ensure timely execution of field activities</li>
           </ul>
         </div>
-        <div class="exp-date">Jan 2025 – March 2025</div>
+        <div>
+          <div class="exp-date">Jan 2025 – Mar 2025</div>
+          <!-- FIX: Overlap clarification note -->
+          <div class="exp-overlap-note">⚡ Dual role in Jan 2025 transition period</div>
+        </div>
       </div>
 
       <div class="exp-card">
@@ -1016,6 +1089,10 @@
             advanced <strong style="color:var(--text)">DAX formulas</strong> for data modeling and KPI calculations.
             Enabled real-time business insights for management reporting.
           </p>
+          <!-- FIX 4: GitHub link for Sales Dashboard -->
+          <div class="project-links">
+            <a href="https://github.com/kumarpraveengmail/portfolio/raw/main/sales%20analyst%20deshboard%20projects.pbix" target="_blank" class="proj-link github">⬇ Download PBIX File</a>
+          </div>
         </div>
         <div class="mini-chart">
           <div class="bar" style="height:20px;animation-delay:.1s"></div>
@@ -1041,8 +1118,11 @@
             <li>Designed interactive slicers, charts, and filters for easy management review</li>
             <li>Automated reporting to reduce manual work and improve accuracy</li>
           </ul>
-          <!-- FIX 3: Button triggers fixed modal -->
-          <button class="view-btn" id="viewDashboardBtn">📷 View Dashboard</button>
+          <!-- FIX 5: Both GitHub link + View Dashboard button -->
+          <div class="project-links">
+            <a href="https://github.com/kumarpraveengmail/portfolio/raw/main/AE%20Phase%20II%20Crops%20Data.pbix" target="_blank" class="proj-link github">⬇ Download PBIX File</a>
+            <button class="proj-link view-dash" id="viewDashboardBtn">📷 View Dashboard</button>
+          </div>
         </div>
         <div class="mini-chart">
           <div class="bar" style="height:24px;animation-delay:.1s"></div>
@@ -1078,11 +1158,30 @@
           <div class="edu-year">2016</div>
         </div>
       </div>
+      <!-- FIX 6: Certifications with years -->
       <div class="cert-card">
         <div class="cert-list">
-          <div class="cert-item">O Level – Business Professional Programmer (NIELIT)</div>
-          <div class="cert-item">CCC – Course on Computer Concepts (NIELIT)</div>
-          <div class="cert-item">Data Science & Machine Learning – Ducat Institute</div>
+          <div class="cert-item">
+            <span class="cert-check">✓</span>
+            <div class="cert-info">
+              <span>O Level – Business Professional Programmer (NIELIT)</span>
+              <span class="cert-year">2022 · National Institute of Electronics & IT</span>
+            </div>
+          </div>
+          <div class="cert-item">
+            <span class="cert-check">✓</span>
+            <div class="cert-info">
+              <span>CCC – Course on Computer Concepts (NIELIT)</span>
+              <span class="cert-year">2020 · National Institute of Electronics & IT</span>
+            </div>
+          </div>
+          <div class="cert-item">
+            <span class="cert-check">✓</span>
+            <div class="cert-info">
+              <span>Data Science & Machine Learning</span>
+              <span class="cert-year">2023 · Ducat Institute, Noida</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1098,18 +1197,19 @@
       </p>
     </div>
     <div class="contact-links">
-      <a href="tel:+919760518551" class="c-link phone-link">📞 Contect </a>
+      <!-- FIX 7: "Contect" → "Contact" in footer too -->
+      <a href="tel:+919760518551" class="c-link phone-link">📞 Contact</a>
       <a href="mailto:praveenkumar9760518551@gmail.com" class="c-link">✉️ Email</a>
       <a href="https://linkedin.com/in/praveen-kumar-8585b21a7" class="c-link" target="_blank">🔗 LinkedIn</a>
       <a href="https://github.com/kumarpraveengmail" class="c-link" target="_blank">⚡ GitHub</a>
     </div>
   </div>
 
-  <!-- ─── FIX 4: IMAGE MODAL – fixed structure ─── -->
+  <!-- IMAGE MODAL -->
   <div class="image-modal" id="imageModal" role="dialog" aria-modal="true" aria-label="Dashboard Preview">
     <div class="modal-inner">
       <span class="close-btn" id="closeBtn" title="Close">&times;</span>
-      <!-- FIX 5: URL-encoded filename (space → %20), onerror shows helpful message -->
+      <!-- FIX 8: Correct image path with proper URL encoding -->
       <img
         src="Crops%20Project%20Image.jpg"
         alt="AE Phase II Crops Data Dashboard"
@@ -1117,9 +1217,9 @@
         onerror="document.getElementById('imgErrMsg').style.display='block'; this.style.display='none';"
       >
       <div class="img-error-msg" id="imgErrMsg">
-        ⚠️ Image not found.<br>
-        Please make sure <code>Crops Project Image.jpg</code><br>
-        is inside an <code>images/</code> folder next to this HTML file.
+        ⚠️ Dashboard image not found.<br><br>
+        Please upload <code>Crops Project Image.jpg</code> to your GitHub repository in the same folder as <code>index.html</code>.<br><br>
+        <span style="color:var(--text-dim);font-size:11px">Path: <code>portfolio/Crops Project Image.jpg</code></span>
       </div>
     </div>
   </div>
@@ -1156,7 +1256,6 @@
   }
   animRing();
 
-  // FIX 6: Added .view-btn to interactive elements list for cursor enlargement
   const interactiveEls = document.querySelectorAll('a, button, .skill-block, .exp-card, .stat-card');
   interactiveEls.forEach(el => {
     el.addEventListener('mouseenter', () => {
@@ -1211,35 +1310,29 @@
     obs.observe(s);
   });
 
-  // ─────────────────────────────────────────────
-  //  IMAGE MODAL — all fixes applied here
-  // ─────────────────────────────────────────────
+  // ─── IMAGE MODAL ───
   const modal    = document.getElementById('imageModal');
   const closeBtn = document.getElementById('closeBtn');
   const viewBtn  = document.getElementById('viewDashboardBtn');
 
-  // FIX 7: Open modal
   viewBtn.addEventListener('click', () => {
     modal.classList.add('active');
-    document.body.style.overflow = 'hidden'; // prevent background scroll
+    document.body.style.overflow = 'hidden';
   });
 
-  // FIX 8: Close via × button
   closeBtn.addEventListener('click', closeModal);
 
-  // FIX 9: Close by clicking the dark overlay (NOT the image/inner)
   modal.addEventListener('click', e => {
     if (e.target === modal) closeModal();
   });
 
-  // FIX 10: Close with Escape key
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeModal();
   });
 
   function closeModal() {
     modal.classList.remove('active');
-    document.body.style.overflow = ''; // restore scroll
+    document.body.style.overflow = '';
   }
 </script>
 
