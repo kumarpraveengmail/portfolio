@@ -32,7 +32,6 @@
     cursor: none;
   }
 
-  /* ─── SCROLL PROGRESS ─── */
   #scroll-bar {
     position: fixed;
     top: 0; left: 0;
@@ -44,7 +43,6 @@
     box-shadow: 0 0 10px var(--accent);
   }
 
-  /* ─── CURSOR ─── */
   .cursor {
     position: fixed;
     width: 10px; height: 10px;
@@ -68,7 +66,6 @@
     opacity: 0.5;
   }
 
-  /* ─── FLOATING HIRE ME BUTTON ─── */
   .hire-float {
     position: fixed;
     bottom: 32px;
@@ -130,7 +127,6 @@
     50% { box-shadow: 0 8px 32px rgba(0,229,255,.4), 0 0 0 12px rgba(0,229,255,.0); }
   }
 
-  /* ─── GRID BG ─── */
   body::before {
     content: '';
     position: fixed;
@@ -166,7 +162,6 @@
 
   main { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; padding: 0 24px 100px; }
 
-  /* ─── HERO ─── */
   .hero {
     padding: 100px 0 60px;
     display: grid;
@@ -276,7 +271,6 @@
   }
   .link-pill.download:hover { background: rgba(0,230,118,.12); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,230,118,.2); }
 
-  /* Hero panel */
   .hero-panel {
     width: 160px;
     display: flex;
@@ -309,7 +303,6 @@
     margin-top: 4px;
     text-transform: uppercase;
   }
-  /* FIX: Stats tooltip / sub-label for context */
   .stat-card .sub-lbl {
     font-size: 8px;
     color: var(--text-dim);
@@ -317,7 +310,6 @@
     font-family: 'DM Mono', monospace;
   }
 
-  /* ─── SECTIONS ─── */
   section {
     margin-top: 64px;
     animation: fadeUp .8s ease both;
@@ -350,7 +342,6 @@
     background: var(--border);
   }
 
-  /* ─── SKILLS ─── */
   .skills-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -404,7 +395,6 @@
     background: var(--surface2);
   }
 
-  /* ─── EXPERIENCE ─── */
   .exp-list { display: flex; flex-direction: column; gap: 20px; }
 
   .exp-card {
@@ -459,7 +449,6 @@
   }
   .exp-date.active { color: var(--green); border-color: rgba(0,230,118,.25); background: rgba(0,230,118,.06); }
 
-  /* FIX: Dual-role note */
   .exp-overlap-note {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -509,7 +498,6 @@
   }
   .exp-bullets li strong { color: var(--text); font-weight: 500; }
 
-  /* ─── PROJECT ─── */
   .project-grid { display: flex; flex-direction: column; gap: 20px; }
 
   .project-card {
@@ -549,7 +537,6 @@
   }
   .project-desc { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; }
 
-  /* FIX: Project action links */
   .project-links {
     display: flex;
     gap: 10px;
@@ -596,7 +583,6 @@
   }
   .bar { width: 8px; border-radius: 2px 2px 0 0; background: linear-gradient(180deg, var(--accent2), var(--accent)); animation: barGrow .8s ease both; }
 
-  /* ─── EDUCATION & CERTS ─── */
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
   .edu-card, .cert-card {
@@ -648,14 +634,12 @@
     margin-top: 1px;
   }
   .cert-info { display: flex; flex-direction: column; gap: 3px; }
-  /* FIX: Cert year badge */
   .cert-year {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
     color: var(--text-dim);
   }
 
-  /* ─── CONTACT BAR ─── */
   .contact-bar {
     margin-top: 64px;
     background: var(--surface);
@@ -733,7 +717,6 @@
   }
   .c-link.phone-link:hover { background: linear-gradient(135deg, rgba(0,229,255,.2), rgba(123,97,255,.15)); box-shadow: 0 8px 24px rgba(0,229,255,.2); }
 
-  /* ─── FOOTER ─── */
   footer {
     text-align: center;
     padding: 40px 0 20px;
@@ -745,7 +728,6 @@
   }
   footer span { color: var(--accent); }
 
-  /* ─── ANIMATIONS ─── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -764,7 +746,6 @@
   section:nth-child(4) { animation-delay: .3s; }
   section:nth-child(5) { animation-delay: .4s; }
 
-  /* ─── RESPONSIVE ─── */
   @media (max-width: 700px) {
     .hero { grid-template-columns: 1fr; }
     .hero-panel { flex-direction: row; width: 100%; }
@@ -781,7 +762,7 @@
     .skills-grid { grid-template-columns: 1fr; }
   }
 
-  /* ===== IMAGE POPUP ===== */
+  /* ===== IMAGE MODAL ===== */
   .image-modal {
     display: flex;
     justify-content: center;
@@ -881,7 +862,7 @@
 
 <main>
 
-  <!-- ─── HERO ─── -->
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
       <div class="hero-badge">🟢 Open to Full-Time Opportunities</div>
@@ -895,7 +876,6 @@
       </p>
       <div class="hero-links">
         <a href="mailto:praveenkumar9760518551@gmail.com" class="link-pill primary">📧 Email Me</a>
-        <!-- FIX 1: "Contect" → "Contact" -->
         <a href="tel:+919760518551" class="link-pill primary">📞 Contact Me</a>
         <a href="https://linkedin.com/in/praveen-kumar-8585b21a7" class="link-pill ghost" target="_blank">🔗 LinkedIn</a>
         <a href="https://github.com/kumarpraveengmail" class="link-pill ghost" target="_blank">⚡ GitHub</a>
@@ -903,7 +883,6 @@
       </div>
     </div>
     <div class="hero-panel">
-      <!-- FIX 2: Stats with context sub-labels -->
       <div class="stat-card">
         <div class="val">2+</div>
         <div class="lbl">YRS EXP</div>
@@ -927,7 +906,7 @@
     </div>
   </section>
 
-  <!-- ─── SKILLS ─── -->
+  <!-- SKILLS -->
   <section>
     <div class="sec-label"><span class="num">01</span><h2>Technical Skills</h2></div>
     <div class="skills-grid">
@@ -986,7 +965,7 @@
     </div>
   </section>
 
-  <!-- ─── EXPERIENCE ─── -->
+  <!-- EXPERIENCE -->
   <section>
     <div class="sec-label"><span class="num">02</span><h2>Work Experience</h2></div>
     <div class="exp-list">
@@ -1033,7 +1012,6 @@
         </div>
       </div>
 
-      <!-- FIX 3: MCS role with overlap note -->
       <div class="exp-card">
         <div>
           <div class="exp-title">Monitoring and Coordination Support Assistant (MCS)</div>
@@ -1047,7 +1025,6 @@
         </div>
         <div>
           <div class="exp-date">Jan 2025 – Mar 2025</div>
-          <!-- FIX: Overlap clarification note -->
           <div class="exp-overlap-note">⚡ Dual role in Jan 2025 transition period</div>
         </div>
       </div>
@@ -1074,11 +1051,12 @@
     </div>
   </section>
 
-  <!-- ─── PROJECTS ─── -->
+  <!-- PROJECTS -->
   <section>
     <div class="sec-label"><span class="num">03</span><h2>Projects</h2></div>
     <div class="project-grid">
 
+      <!-- Sales Analytics Dashboard -->
       <div class="project-card">
         <span class="project-badge badge-excel">EXCEL + POWER BI</span>
         <div>
@@ -1089,9 +1067,9 @@
             advanced <strong style="color:var(--text)">DAX formulas</strong> for data modeling and KPI calculations.
             Enabled real-time business insights for management reporting.
           </p>
-          <!-- FIX 4: GitHub link for Sales Dashboard -->
           <div class="project-links">
             <a href="https://github.com/kumarpraveengmail/portfolio/raw/main/sales%20analyst%20deshboard%20projects.pbix" target="_blank" class="proj-link github">⬇ Download PBIX File</a>
+            <button class="proj-link view-dash" id="viewSalesDashboardBtn">📷 View Dashboard</button>
           </div>
         </div>
         <div class="mini-chart">
@@ -1104,6 +1082,7 @@
         </div>
       </div>
 
+      <!-- AE Phase II Crops Dashboard -->
       <div class="project-card">
         <span class="project-badge badge-pbi">POWER BI</span>
         <div>
@@ -1118,7 +1097,6 @@
             <li>Designed interactive slicers, charts, and filters for easy management review</li>
             <li>Automated reporting to reduce manual work and improve accuracy</li>
           </ul>
-          <!-- FIX 5: Both GitHub link + View Dashboard button -->
           <div class="project-links">
             <a href="https://github.com/kumarpraveengmail/portfolio/raw/main/AE%20Phase%20II%20Crops%20Data.pbix" target="_blank" class="proj-link github">⬇ Download PBIX File</a>
             <button class="proj-link view-dash" id="viewDashboardBtn">📷 View Dashboard</button>
@@ -1137,7 +1115,7 @@
     </div>
   </section>
 
-  <!-- ─── EDUCATION & CERTS ─── -->
+  <!-- EDUCATION & CERTS -->
   <section>
     <div class="sec-label"><span class="num">04</span><h2>Education & Certifications</h2></div>
     <div class="two-col">
@@ -1158,7 +1136,6 @@
           <div class="edu-year">2016</div>
         </div>
       </div>
-      <!-- FIX 6: Certifications with years -->
       <div class="cert-card">
         <div class="cert-list">
           <div class="cert-item">
@@ -1187,7 +1164,7 @@
     </div>
   </section>
 
-  <!-- ─── CONTACT ─── -->
+  <!-- CONTACT -->
   <div class="contact-bar">
     <div style="position:relative">
       <h3>Ready to Contribute. Let's Talk.</h3>
@@ -1197,7 +1174,6 @@
       </p>
     </div>
     <div class="contact-links">
-      <!-- FIX 7: "Contect" → "Contact" in footer too -->
       <a href="tel:+919760518551" class="c-link phone-link">📞 Contact</a>
       <a href="mailto:praveenkumar9760518551@gmail.com" class="c-link">✉️ Email</a>
       <a href="https://linkedin.com/in/praveen-kumar-8585b21a7" class="c-link" target="_blank">🔗 LinkedIn</a>
@@ -1205,11 +1181,28 @@
     </div>
   </div>
 
-  <!-- IMAGE MODAL -->
-  <div class="image-modal" id="imageModal" role="dialog" aria-modal="true" aria-label="Dashboard Preview">
+  <!-- ── SALES DASHBOARD IMAGE MODAL ── -->
+  <div class="image-modal" id="salesImageModal" role="dialog" aria-modal="true" aria-label="Sales Dashboard Preview">
+    <div class="modal-inner">
+      <span class="close-btn" id="closeSalesBtn" title="Close">&times;</span>
+      <img
+        src="sales%20analyst%20deshboard%20projects.jpg"
+        alt="Sales Analytics Dashboard"
+        id="salesModalImg"
+        onerror="document.getElementById('salesImgErrMsg').style.display='block'; this.style.display='none';"
+      >
+      <div class="img-error-msg" id="salesImgErrMsg">
+        ⚠️ Dashboard image not found.<br><br>
+        Please upload <code>sales analyst deshboard projects.jpg</code> to your GitHub repository in the same folder as <code>index.html</code>.<br><br>
+        <span style="color:var(--text-dim);font-size:11px">Path: <code>portfolio/sales analyst deshboard projects.jpg</code></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CROPS DASHBOARD IMAGE MODAL ── -->
+  <div class="image-modal" id="imageModal" role="dialog" aria-modal="true" aria-label="Crops Dashboard Preview">
     <div class="modal-inner">
       <span class="close-btn" id="closeBtn" title="Close">&times;</span>
-      <!-- FIX 8: Correct image path with proper URL encoding -->
       <img
         src="Crops%20Project%20Image.jpg"
         alt="AE Phase II Crops Data Dashboard"
@@ -1231,14 +1224,14 @@
 </footer>
 
 <script>
-  // ─── Scroll progress bar ───
+  // Scroll progress bar
   window.addEventListener('scroll', () => {
     const total = document.body.scrollHeight - window.innerHeight;
     const pct = (window.scrollY / total) * 100;
     document.getElementById('scroll-bar').style.width = pct + '%';
   });
 
-  // ─── Custom cursor ───
+  // Custom cursor
   const cur = document.getElementById('cur');
   const ring = document.getElementById('ring');
   let mx = 0, my = 0, rx = 0, ry = 0;
@@ -1268,7 +1261,7 @@
     });
   });
 
-  // ─── Typing animation ───
+  // Typing animation
   const roles = [
     'MIS Assistant  |  Data Analyst',
     'Excel · Power BI · SQL · KoBoToolbox',
@@ -1299,7 +1292,7 @@
   }
   type();
 
-  // ─── Scroll reveal ───
+  // Scroll reveal
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) e.target.style.animationPlayState = 'running';
@@ -1310,7 +1303,7 @@
     obs.observe(s);
   });
 
-  // ─── IMAGE MODAL ───
+  // ── CROPS DASHBOARD MODAL ──
   const modal    = document.getElementById('imageModal');
   const closeBtn = document.getElementById('closeBtn');
   const viewBtn  = document.getElementById('viewDashboardBtn');
@@ -1319,19 +1312,31 @@
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
   });
+  closeBtn.addEventListener('click', () => closeModal(modal));
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(modal); });
 
-  closeBtn.addEventListener('click', closeModal);
+  // ── SALES DASHBOARD MODAL ──
+  const salesModal    = document.getElementById('salesImageModal');
+  const closeSalesBtn = document.getElementById('closeSalesBtn');
+  const viewSalesBtn  = document.getElementById('viewSalesDashboardBtn');
 
-  modal.addEventListener('click', e => {
-    if (e.target === modal) closeModal();
+  viewSalesBtn.addEventListener('click', () => {
+    salesModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
   });
+  closeSalesBtn.addEventListener('click', () => closeModal(salesModal));
+  salesModal.addEventListener('click', e => { if (e.target === salesModal) closeModal(salesModal); });
 
+  // Shared close on Escape
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Escape') {
+      closeModal(modal);
+      closeModal(salesModal);
+    }
   });
 
-  function closeModal() {
-    modal.classList.remove('active');
+  function closeModal(m) {
+    m.classList.remove('active');
     document.body.style.overflow = '';
   }
 </script>
