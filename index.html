@@ -762,6 +762,16 @@
     .skills-grid { grid-template-columns: 1fr; }
   }
 
+  /* Disable custom cursor on touch / mobile devices so it doesn't get stuck on screen */
+  @media (hover: none), (pointer: coarse) {
+    .cursor, .cursor-ring { display: none !important; }
+    body, a, button, .hire-btn, .hire-call,
+    .link-pill, .proj-link, .c-link, .view-dash,
+    .skill-block, .exp-card, .stat-card, .cert-item {
+      cursor: auto !important;
+    }
+  }
+
   /* ===== IMAGE MODAL ===== */
   .image-modal {
     display: flex;
@@ -1240,35 +1250,43 @@
     document.getElementById('scroll-bar').style.width = pct + '%';
   });
 
-  // Custom cursor
+  // Custom cursor — only enable on devices with a real mouse (skip on touch/mobile)
+  const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const cur = document.getElementById('cur');
   const ring = document.getElementById('ring');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cur.style.left = mx + 'px';
-    cur.style.top  = my + 'px';
-  });
-  function animRing() {
-    rx += (mx - rx) * .15;
-    ry += (my - ry) * .15;
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    requestAnimationFrame(animRing);
-  }
-  animRing();
 
-  const interactiveEls = document.querySelectorAll('a, button, .skill-block, .exp-card, .stat-card');
-  interactiveEls.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cur.style.width = '20px'; cur.style.height = '20px';
-      ring.style.width = '60px'; ring.style.height = '60px';
+  if (hasFinePointer) {
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cur.style.left = mx + 'px';
+      cur.style.top  = my + 'px';
     });
-    el.addEventListener('mouseleave', () => {
-      cur.style.width = '10px'; cur.style.height = '10px';
-      ring.style.width = '36px'; ring.style.height = '36px';
+    function animRing() {
+      rx += (mx - rx) * .15;
+      ry += (my - ry) * .15;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(animRing);
+    }
+    animRing();
+
+    const interactiveEls = document.querySelectorAll('a, button, .skill-block, .exp-card, .stat-card');
+    interactiveEls.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cur.style.width = '20px'; cur.style.height = '20px';
+        ring.style.width = '60px'; ring.style.height = '60px';
+      });
+      el.addEventListener('mouseleave', () => {
+        cur.style.width = '10px'; cur.style.height = '10px';
+        ring.style.width = '36px'; ring.style.height = '36px';
+      });
     });
-  });
+  } else {
+    // Touch device: hide the custom cursor dots entirely
+    cur.style.display = 'none';
+    ring.style.display = 'none';
+  }
 
   // Typing animation
   const roles = [
